@@ -14,7 +14,7 @@ require("./services/cache");
 
 const connectDB = async () => {
   try {
-    const connect = await mongoose.connect(process.env.MONGOURI, {
+    const connect = await mongoose.connect(keys.mongoURI, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
@@ -44,7 +44,7 @@ connectDB();
 require("./routes/authRoutes")(app);
 require("./routes/blogRoutes")(app);
 
-if (["production"].includes(process.env.NODE_ENV)) {
+if (["production", "ci"].includes(process.env.NODE_ENV)) {
   app.use(express.static("client/build"));
 
   const path = require("path");
